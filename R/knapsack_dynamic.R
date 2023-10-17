@@ -92,4 +92,7 @@ knapsack_dynamic <-  function(x, W){
 #    v=runif(n = n, 0, 10000)
 #  )
 
-#knapsack_dynamic(x = knapsack_objects[1:1200,], W = 3500)
+#system.time(knapsack_dynamic(x = knapsack_objects[1:500,], W = 3500))
+
+#library(profvis)
+#profvis(knapsack_dynamic(x = knapsack_objects[1:500,], W = 3500))

@@ -52,6 +52,7 @@ greedy_knapsack <- function(x, W){
     
   }
 }
+
 #suppressWarnings(RNGversion(min(as.character(getRversion()),"3.5.3")))
 #set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
 #n <- 2000 
@@ -61,3 +62,6 @@ greedy_knapsack <- function(x, W){
 #greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
 #greedy_knapsack(x = knapsack_objects[1:1200,], W = 2000)
 #system.time(greedy_knapsack(x = knapsack_objects[1:1000000,], W = 3500))
+
+#library(profvis)
+#profvis(greedy_knapsack(x = knapsack_objects[1:1000000,], W = 3500))

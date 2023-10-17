@@ -1,0 +1,125 @@
+---
+title: "knapsack-vignette"
+author: "SILA KILICOGLU (silki753@student.liu.se) and SAMI FURKAN YILDIRIM (samyi572@student.liu.se)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{knapsack-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## **Description**
+The package contains three different functions (brute_force_knapsack, greedy_knapsack, knapsack_dynamic), which are used brute force search, dynamic and greedy algorithms, for solving what is called the knapsack problem.
+
+## **Import**
+
+```{r setup}
+library(parallel)
+library(knapsack)
+```
+
+## **Arguments**
+All three functions use the same argument:
+_x_
+: A data frame with two variables v (value) and w (weigth)
+_W_
+: The variable is the knapsack size.
+
+## **Functions**
+_**Brute Force Search**_:
+For this function, there is an option argument called parallel and default value is FALSE.
+```r
+brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
+brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
+brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
+brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
+```
+If parallel argument set to TRUE, then the function parallelizes over the detected cores.
+
+```r
+brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel = TRUE)
+brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel = TRUE)
+brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000, parallel = TRUE)
+brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000, parallel = TRUE)
+
+```
+
+Without parallelizing brute force search, it takes:
+
+```r
+system.time(brute_force_knapsack(x = knapsack_objects[1:16,], W = 2000))
+```
+For profile code:
+```r
+library(profvis)
+profvis(brute_force_knapsack(x = knapsack_objects[1:16,], W = 2000))
+```
+
+
+With parallelizing brute force search, it takes:
+
+```r
+system.time(brute_force_knapsack(x = knapsack_objects[1:16,], W = 2000, parallel = TRUE))
+```
+_Question: What performance gain could you get by parallelizing brute force search?_ \newline
+_It speeds up the execution of the code._
+
+For profile code:
+```r
+library(profvis)
+profvis(brute_force_knapsack(x = knapsack_objects[1:16,], W = 2000, parallel=TRUE))
+```
+
+_**Dynamic Programming**_:
+For $n = 500$ objects, it takes: 
+```r
+system.time(knapsack_dynamic(x = knapsack_objects[1:500,], W = 3500))
+```
+For profile code:
+```r
+library(profvis)
+profvis(knapsack_dynamic(x = knapsack_objects[1:500,], W = 3500))
+```
+
+_**Greedy Heuristic**_:
+
+```r
+greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
+greedy_knapsack(x = knapsack_objects[1:1200,], W = 2000)
+```
+
+For $n = 1000000$ objects, it takes:  
+```r
+system.time(greedy_knapsack(x = knapsack_objects[1:1000000,], W = 3500))
+```
+
+For profile code:
+```r
+library(profvis)
+profvis(greedy_knapsack(x = knapsack_objects[1:1000000,], W = 3500))
+```
+
+
+## *Important Note*
+
+These three functions don't give always the same results:
+
+```r
+greedy_knapsack(x = knapsack_objects[1:8,], W = 3500)
+```
+
+```r
+brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
+```
+
+```r
+knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500)
+```
