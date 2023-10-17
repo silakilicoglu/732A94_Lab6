@@ -22,6 +22,7 @@ brute_force_knapsack <- function(x, W, parallel = FALSE){
   
   
   if(parallel==TRUE){
+    library(parallel)
     s=1:(2^n-1)
     sub_func <- function(s,x,n,W){
       value=0
@@ -36,7 +37,7 @@ brute_force_knapsack <- function(x, W, parallel = FALSE){
       return(value)
     }
     
-    core <- parallel::detectCores()
+    core <- detectCores()
     clstr <- makeCluster(core, type = "PSOCK")
     par_result <- parLapply(clstr, s, fun = sub_func, x, n, W)
     stopCluster(clstr)
@@ -78,8 +79,6 @@ brute_force_knapsack <- function(x, W, parallel = FALSE){
 }
 
 suppressWarnings(RNGversion(min(as.character(getRversion()),"3.5.3"))) 
-##old sampler used for backward compatibility
-## suppressWarnings() can be used so that the above warning is not displayed
 set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
 n <- 2000
 knapsack_objects <-
@@ -87,14 +86,14 @@ knapsack_objects <-
     w=sample(1:4000, size = n, replace = TRUE),
     v=runif(n = n, 0, 10000)
   )
-brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
-brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
-brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
-brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
-system.time(brute_force_knapsack(x = knapsack_objects[1:16,], W = 2000))
+#brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
+#brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
+#brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
+#brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
+#system.time(brute_force_knapsack(x = knapsack_objects[1:16,], W = 2000))
 
-brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel = TRUE)
-brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel = TRUE)
-brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000, parallel = TRUE)
-brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000, parallel = TRUE)
-system.time(brute_force_knapsack(x = knapsack_objects[1:16,], W = 2000, parallel = TRUE))
+#brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel = TRUE)
+#brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel = TRUE)
+#brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000, parallel = TRUE)
+#brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000, parallel = TRUE)
+#system.time(brute_force_knapsack(x = knapsack_objects[1:16,], W = 2000, parallel = TRUE))
