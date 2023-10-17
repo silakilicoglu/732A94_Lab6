@@ -1,0 +1,2 @@
+export("a", "brute_force_knapsack",
+       "knapsack_objects", "n")
