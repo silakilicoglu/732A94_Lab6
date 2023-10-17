@@ -1,4 +1,28 @@
-# Brute Force Search
+#' Brute Force Search
+#' 
+#' @name brute_force_knapsack
+#' 
+#' @description
+#' Knapsack brute force function that takes a data frame x with two variables v and w, and with a choice of parallel. 
+#' Returns the maximum knapsack value and which elements (rows in the data.frame).
+#'
+#' @param x a data frame
+#' @param W knapsack size, positive number
+#' @param parallel FALSE for non-parallel and default value is FALSE, TRUE for parallel
+#'
+#' @return The maximum knapsack value and which elements (rows in the data.frame)
+#' 
+#' @examples 
+#' brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
+#' brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
+#' brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
+#' brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
+#' 
+#' @references https://en.wikipedia.org/wiki/Knapsack%7D
+#' 
+#' @import parallel
+#' @export brute_force_knapsack
+
 brute_force_knapsack <- function(x, W, parallel = FALSE){
   
   # Control inputs
@@ -22,7 +46,6 @@ brute_force_knapsack <- function(x, W, parallel = FALSE){
   
   
   if(parallel==TRUE){
-    library(parallel)
     s=1:(2^n-1)
     sub_func <- function(s,x,n,W){
       value=0
@@ -37,10 +60,11 @@ brute_force_knapsack <- function(x, W, parallel = FALSE){
       return(value)
     }
     
-    core <- detectCores()
-    clstr <- makeCluster(core, type = "PSOCK")
-    par_result <- parLapply(clstr, s, fun = sub_func, x, n, W)
-    stopCluster(clstr)
+    
+    core <- parallel::detectCores()
+    clstr <- parallel::makeCluster(core, type = "PSOCK")
+    par_result <- parallel::parLapply(clstr, s, fun = sub_func, x, n, W)
+    parallel::stopCluster(clstr)
     par_result1= as.vector(unlist(par_result))
     k=which(par_result1==max(par_result1),arr.ind=TRUE)
     elements=which(as.numeric(intToBits(k))==1)
@@ -78,14 +102,15 @@ brute_force_knapsack <- function(x, W, parallel = FALSE){
   }
 }
 
-suppressWarnings(RNGversion(min(as.character(getRversion()),"3.5.3"))) 
-set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
-n <- 2000
-knapsack_objects <-
-  data.frame(
-    w=sample(1:4000, size = n, replace = TRUE),
-    v=runif(n = n, 0, 10000)
-  )
+#suppressWarnings(RNGversion(min(as.character(getRversion()),"3.5.3"))) 
+#set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
+#n <- 2000
+#knapsack_objects <-
+#  data.frame(
+#    w=sample(1:4000, size = n, replace = TRUE),
+#    v=runif(n = n, 0, 10000)
+#  )
+
 #brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
 #brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
 #brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)

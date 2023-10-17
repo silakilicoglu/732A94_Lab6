@@ -19,26 +19,26 @@ test_that("functions rejects errounous input.", {
 test_that("Function return correct results.", {
   kd <- knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500)
   expect_equal(round(kd$value), 16770)
-  expect_true(all(round(gk$elements) %in% c(5, 8)))
+  expect_true(all(round(kd$elements) %in% c(5, 8)))
   
   kd <- knapsack_dynamic(x = knapsack_objects[1:12,], W = 3500)
   expect_equal(round(kd$value), 16770)
-  expect_true(all(round(gk$elements) %in% c(5, 8)))
+  expect_true(all(round(kd$elements) %in% c(5, 8)))
   
   kd <- knapsack_dynamic(x = knapsack_objects[1:8,], W = 2000)
   expect_equal(round(kd$value), 15428)
-  expect_true(all(round(gk$elements) %in% c(3, 8)))
+  expect_true(all(round(kd$elements) %in% c(3, 8)))
   
   kd <- knapsack_dynamic(x = knapsack_objects[1:12,], W = 2000)
   expect_equal(round(kd$value), 15428)
-  expect_true(all(round(gk$elements) %in% c(3, 8)))
+  expect_true(all(round(kd$elements) %in% c(3, 8)))
   
   st <- system.time(gk <- knapsack_dynamic(x = knapsack_objects[1:16,], W = 2000))
   expect_true(as.numeric(st)[2] <= 0.01)
   
-  dk <- knapsack_dynamic(x = knapsack_objects[1:800,], W = 3500)
-  expect_equal(round(dk$value), 195283)
+  kd <- knapsack_dynamic(x = knapsack_objects[1:800,], W = 3500)
+  expect_equal(round(kd$value), 195283)
   
-  dk <- knapsack_dynamic(x = knapsack_objects[1:1200,], W = 3500)
-  expect_equal(round(dk$value), 276034)
+  kd <- knapsack_dynamic(x = knapsack_objects[1:1200,], W = 3500)
+  expect_equal(round(kd$value), 276034)
 })

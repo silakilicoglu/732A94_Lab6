@@ -1,8 +1,8 @@
 Package: knapsack
 Type: Package
-Title: What the package does (short line)
+Title: The Knapsack Package
 Version: 1.0
-Date: 2023-10-09
+Date: 2023-10-17
 Author: SILA KILICOGLU (silki753@student.liu.se) and SAMI FURKAN YILDIRIM (samyi572@student.liu.se)
 Maintainer: SILA KILICOGLU <silakilicoglu@gmail.com>
 Description: Advance R Programming Lab 6 Assingment.
@@ -13,3 +13,6 @@ RoxygenNote: 7.2.3
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Imports: parallel
+Depends: 
+    R (>= 2.10)
