@@ -8,9 +8,8 @@ brute_force_knapsack <- function(x, W, parallel = FALSE){
             typeof(x$w) == "integer",
             typeof(x$v) == "double",
             is.numeric(W),
-            length(W) == 1)
-  
-  stopifnot(W > 0)
+            length(W) == 1,
+            W > 0)
   
   # W: çantanın ağırlığı (kapasite)
   # x in içinde 2 değer var (w, v)
